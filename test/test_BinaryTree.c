@@ -21,7 +21,7 @@ void tearDown(void)
  */
 void test_binary_tree_with_1_node(void)
 {
-	Node root = {NULL, NULL , 10};
+	Node root = {NULL, NULL , 10, UNKNOWN_NODE_STATE};
 	Stack stack;
 	stackNew_ExpectAndReturn(&stack);
 	printf("---------------------------------------------------------------------\n");
@@ -45,8 +45,8 @@ void test_binary_tree_with_1_node(void)
  */
 void test_binary_tree_with_2_nodes_parent_and_left_child(void)
 {
-	Node leftChild = {NULL, NULL , 5};
-	Node root = {&leftChild, NULL , 10};
+	Node leftChild = {NULL, NULL , 5, UNKNOWN_NODE_STATE};
+	Node root = {&leftChild, NULL , 10, UNKNOWN_NODE_STATE};
 	Stack stack;
 	printf("---------------------------------------------------------------------\n");
 	
@@ -74,9 +74,9 @@ void test_binary_tree_with_2_nodes_parent_and_left_child(void)
  */
 void test_binary_tree_with_3_nodes_parent_left_child_and_right_child(void)
 {
-	Node leftChild = {NULL, NULL , 5};
-	Node rightChild = {NULL, NULL , 20};
-	Node root = {&leftChild, &rightChild , 10};
+	Node leftChild = {NULL, NULL , 5, UNKNOWN_NODE_STATE};
+	Node rightChild = {NULL, NULL , 20, UNKNOWN_NODE_STATE};
+	Node root = {&leftChild, &rightChild , 10, UNKNOWN_NODE_STATE};
 	Stack stack;
 	printf("---------------------------------------------------------------------\n");
 	
@@ -108,8 +108,8 @@ void test_binary_tree_with_3_nodes_parent_left_child_and_right_child(void)
  */
 void test_binary_tree_with_2_nodes_parent_and_right_child(void)
 {
-	Node rightChild = {NULL, NULL , 20};
-	Node root = {NULL, &rightChild , 10};
+	Node rightChild = {NULL, NULL , 20, UNKNOWN_NODE_STATE};
+	Node root = {NULL, &rightChild , 10, UNKNOWN_NODE_STATE};
 	Stack stack;
 	printf("---------------------------------------------------------------------\n");
 	
@@ -138,13 +138,13 @@ void test_binary_tree_with_2_nodes_parent_and_right_child(void)
  *     / \
  *    1   7
  */
-void test_binary_tree_with_4_nodes_parent_myltiple_child(void)
+void test_binary_tree_with_4_nodes_parent_multiple_child(void)
 {
 	
-	Node leftgrandchild = {NULL, NULL, 1};
-	Node rightgrandchild = {NULL, NULL, 7};
-	Node leftChild = {&leftgrandchild, &rightgrandchild , 5};
-	Node root = { &leftChild, NULL , 10};
+	Node leftgrandchild = {NULL, NULL, 1, UNKNOWN_NODE_STATE};
+	Node rightgrandchild = {NULL, NULL, 7, UNKNOWN_NODE_STATE};
+	Node leftChild = {&leftgrandchild, &rightgrandchild , 5 ,UNKNOWN_NODE_STATE};
+	Node root = { &leftChild, NULL , 10, UNKNOWN_NODE_STATE};
 	Stack stack;
 	printf("---------------------------------------------------------------------\n");
 	

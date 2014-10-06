@@ -13,8 +13,8 @@ void changeNodeState(Node *currentNode)
 		case VISITED_LEFT_NODE:
 			currentNode->state = VISITED_RIGHT_NODE;
 			break;
-		default:
-			currentNode->state = UNKNOWN_NODE_STATE;
+		case UNKNOWN_NODE_STATE:
+			currentNode->state = ENTERED_NODE;
 			break;
 	}
 }
@@ -26,9 +26,18 @@ void binaryTreeTraversalInOder(Node *root)
 	Stack *stack = stackNew();
 	printf("created a stack\n");
 	
+	
+	changeNodeState(currentNode);	
+	// stackPush();
+	// checkleftnode();
+	// display();
+	// checkrightnode();
+	
+	
 	if( currentNode->left == NULL)
 	{
 		changeNodeState(currentNode);				//case 1
+		currentNode->state = ENTERED_NODE;
 		printf("Changed state to ENTERED_NODE\n");
 		display(currentNode->data);
 		printf("CurrentNode is %d \n", currentNode->data);
