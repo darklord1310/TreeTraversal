@@ -17,5 +17,8 @@ struct Node{
 void binaryTreeTraversalInOder(Node *root);
 void printLinear(Node *node);
 void binaryTreePrintInOrder(Node *node);
+int checkleftnode(Node *currentNode);
+int checkrightnode(Node *currentNode);
+void printNodeState(Node *currentNode);
 
 #endif // BinaryTree_H
