@@ -157,10 +157,11 @@ void test_binary_tree_with_4_nodes_parent_multiple_child(void)
 	stackPush_Expect(&stack , &leftChild);
 	display_Expect(1);
 	stackPop_ExpectAndReturn(&stack, &leftChild);
+	display_Expect(5);
 	stackPush_Expect(&stack , &leftChild);
 	display_Expect(7);
-	stackPop_ExpectAndReturn(&stack, &leftChild);
 	stackPop_ExpectAndReturn(&stack, &root);
+	display_Expect(10);
 	stackPop_ExpectAndReturn(&stack, NULL);
 	stackDel_Expect(&stack);
 	
@@ -170,6 +171,55 @@ void test_binary_tree_with_4_nodes_parent_multiple_child(void)
 }
 
 
+
+
+/**
+ *    	  10
+ *  	 /  \
+ *	    5    12
+ *     / \   / \
+ *    1   7  11 15
+ */
+void test_binary_tree_with_7_nodes_parent_multiple_child(void)
+{
+	
+	Node leftgrandchild = {NULL, NULL, 1, UNKNOWN_NODE_STATE};
+	Node rightgrandchild = {NULL, NULL, 7, UNKNOWN_NODE_STATE};
+	Node leftgrandchild1 = {NULL, NULL, 11, UNKNOWN_NODE_STATE};
+	Node rightgrandchild1 = {NULL, NULL, 15, UNKNOWN_NODE_STATE};
+	Node leftChild = {&leftgrandchild, &rightgrandchild , 5 ,UNKNOWN_NODE_STATE};
+	Node rightChild = {&leftgrandchild1, &rightgrandchild1 , 12 ,UNKNOWN_NODE_STATE};
+	Node root = { &leftChild, &rightChild , 10, UNKNOWN_NODE_STATE};
+	Stack stack;
+	printf("---------------------------------------------------------------------\n");
+	
+	//mock
+	printf("Starts test_binary_tree_with_7_nodes_parent_and_multiple_child\n");
+	stackNew_ExpectAndReturn(&stack);
+	stackPush_Expect(&stack , &root);
+	stackPush_Expect(&stack , &leftChild);
+	display_Expect(1);
+	stackPop_ExpectAndReturn(&stack, &leftChild);
+	display_Expect(5);
+	stackPush_Expect(&stack , &leftChild);
+	display_Expect(7);
+	stackPop_ExpectAndReturn(&stack, &root);
+	display_Expect(10);
+	stackPush_Expect(&stack , &root);
+	stackPush_Expect(&stack , &rightChild);
+	display_Expect(11);
+	stackPop_ExpectAndReturn(&stack, &rightChild);
+	display_Expect(12);
+	stackPush_Expect(&stack , &rightChild);
+	display_Expect(15);
+	stackPop_ExpectAndReturn(&stack, &rightChild);
+	stackPop_ExpectAndReturn(&stack, &root);
+	stackPop_ExpectAndReturn(&stack, NULL);
+	stackDel_Expect(&stack);
+	
+	//Code
+	binaryTreeTraversalInOder(&root);
+}
 
 
 /**
