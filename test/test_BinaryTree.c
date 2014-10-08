@@ -19,14 +19,15 @@ void tearDown(void)
  *   /  \
  *  -   -
  */
-void xtest_binary_tree_with_1_node(void)
+void test_binary_tree_with_1_node(void)
 {
 	Node root = {NULL, NULL , 10, UNKNOWN_NODE_STATE};
 	Stack stack;
-	stackNew_ExpectAndReturn(&stack);
+	
 	printf("---------------------------------------------------------------------\n");
 	
 	//mock
+	stackNew_ExpectAndReturn(&stack);
 	printf("Starts test_binary_tree_with_1_node\n");
 	display_Expect(10);
 	stackPop_ExpectAndReturn(&stack, NULL);
@@ -73,7 +74,7 @@ void test_binary_tree_with_2_nodes_parent_and_left_child(void)
  *   /  \
  *  5   20
  */
-void xtest_binary_tree_with_3_nodes_parent_left_child_and_right_child(void)
+void test_binary_tree_with_3_nodes_parent_left_child_and_right_child(void)
 {
 	Node leftChild = {NULL, NULL , 5, UNKNOWN_NODE_STATE};
 	Node rightChild = {NULL, NULL , 20, UNKNOWN_NODE_STATE};
@@ -107,7 +108,7 @@ void xtest_binary_tree_with_3_nodes_parent_left_child_and_right_child(void)
  *   /  \
  *  -   20
  */
-void xtest_binary_tree_with_2_nodes_parent_and_right_child(void)
+void test_binary_tree_with_2_nodes_parent_and_right_child(void)
 {
 	Node rightChild = {NULL, NULL , 20, UNKNOWN_NODE_STATE};
 	Node root = {NULL, &rightChild , 10, UNKNOWN_NODE_STATE};
@@ -139,7 +140,7 @@ void xtest_binary_tree_with_2_nodes_parent_and_right_child(void)
  *     / \
  *    1   7
  */
-void xtest_binary_tree_with_4_nodes_parent_multiple_child(void)
+void test_binary_tree_with_4_nodes_parent_multiple_child(void)
 {
 	
 	Node leftgrandchild = {NULL, NULL, 1, UNKNOWN_NODE_STATE};

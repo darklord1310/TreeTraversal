@@ -8,10 +8,13 @@ void changeNodeState(Node *currentNode)
 	switch(currentNode->state)
 	{
 		case ENTERED_NODE:
-			currentNode->state = VISITED_LEFT_NODE;
+			currentNode->state = VISIT_LEFT_NODE;
 			break;
-		case VISITED_LEFT_NODE:
-			currentNode->state = VISITED_RIGHT_NODE;
+		case VISIT_LEFT_NODE:
+			currentNode->state = VISIT_RIGHT_NODE;
+			break;
+		case VISIT_RIGHT_NODE:
+			currentNode->state = VISITED_BOTH_NODE;
 			break;
 		case UNKNOWN_NODE_STATE:
 			currentNode->state = ENTERED_NODE;
@@ -21,9 +24,23 @@ void changeNodeState(Node *currentNode)
 
 
 
+
+void printNodeState(Node *currentNode)
+{
+	if( currentNode->state == VISIT_LEFT_NODE)
+		printf("Status of Node %d changed to VISIT_LEFT_NODE\n", currentNode->data);
+	else if( currentNode->state == VISIT_RIGHT_NODE)
+		printf("Status of Node %d changed to VISIT_RIGHT_NODE\n", currentNode->data);
+	else if( currentNode->state == ENTERED_NODE)
+		printf("Status of Node %d changed to ENTERED_NODE\n", currentNode->data);
+	else if( currentNode->state == VISITED_BOTH_NODE)
+		printf("Status of Node %d changed to VISITED_BOTH_NODE\n", currentNode->data);
+}
+
+
+
 int checkleftnode(Node *currentNode)
 {
-
 	if (currentNode->left == NULL)
 		return 0;
 	else
@@ -31,45 +48,13 @@ int checkleftnode(Node *currentNode)
 }
 
 
+
 int checkrightnode(Node *currentNode)
 {
-
 	if (currentNode->right == NULL)
 		return 0;
 	else
 		return 1;
-}
-
-void traveltoleftend(int node_indicator, Node *currentNode, Stack *stack)
-{
-	if(node_indicator == 0)
-	{
-		changeNodeState(currentNode);
-		printNodeState(currentNode);
-	}
-	
-	while( node_indicator != 0)
-	{
-		changeNodeState(currentNode);
-		printNodeState(currentNode);
-		stackPush(stack , currentNode);
-		printf("Pushed Stack Node %d\n", currentNode->data);
-		currentNode = currentNode->left;
-	}
-}
-
-
-
-
-void printNodeState(Node *currentNode)
-{
-	if( currentNode->state == VISITED_LEFT_NODE)
-		printf("Status of Node %d changed to VISITED_LEFT_NODE\n", currentNode->data);
-	else if( currentNode->state == VISITED_RIGHT_NODE)
-		printf("Status of Node %d changed to VISITED_RIGHT_NODE\n", currentNode->data);
-	else if( currentNode->state == ENTERED_NODE)
-		printf("Status of Node %d changed to ENTERED_NODE\n", currentNode->data);
-
 }
 
 
@@ -78,39 +63,65 @@ void printNodeState(Node *currentNode)
 void binaryTreeTraversalInOder(Node *root)
 {
 	Node *currentNode = root;
-	
 	int node_indicator;  //0 indicate empty, 1 indicate filled
 	Stack *stack = stackNew();
 	printf("created a stack\n");
 	
 	while(currentNode != NULL)
 	{
-		if(currentNode->state == VISITED_LEFT_NODE)
+		if(currentNode->state == VISIT_LEFT_NODE)
 		{
 			display(currentNode->data);
 			printf("CurrentNode is %d \n", currentNode->data);
-			node_indicator = checkrightnode(currentNode);
-			if(node_indicator == 0)
-			{
-				changeNodeState(currentNode);
-				printNodeState(currentNode);
-				currentNode = stackPop(stack);
-			}
+			changeNodeState(currentNode);
+			printNodeState(currentNode);
 		}
 		else if(currentNode->state == UNKNOWN_NODE_STATE)
 		{
 			changeNodeState(currentNode);
 			printNodeState(currentNode);
-			node_indicator = checkleftnode(currentNode);
-			traveltoleftend(node_indicator, currentNode, stack);
 		}
-		else if(currentNode->state == VISITED_RIGHT_NODE)
+		else if( currentNode->state == ENTERED_NODE)
 		{
-			 currentNode = stackPop(stack);
-			 printf("Popped stack node %d\n", currentNode->data);
+			node_indicator = checkleftnode(currentNode);
+			changeNodeState(currentNode);		//visit to left
+			printNodeState(currentNode);
+			if(node_indicator != 0)
+			{
+				stackPush(stack , currentNode);
+				printf("Pushed Stack Node %d\n", currentNode->data);
+				currentNode = currentNode->left;
+			}
+		}
+		else if(currentNode->state == VISIT_RIGHT_NODE)
+		{
+			node_indicator = checkrightnode(currentNode);
+			if(node_indicator == 1)
+			{
+				if (currentNode->right->state != VISITED_BOTH_NODE)
+				{
+					stackPush(stack , currentNode);
+					printf("Pushed Stack Node %d\n", currentNode->data);
+					currentNode = currentNode->right;
+				}
+				else
+				{
+					changeNodeState(currentNode);		//visited both node
+					printNodeState(currentNode);
+				}
+			}
+			else
+			{
+				changeNodeState(currentNode);		//visited both node
+				printNodeState(currentNode);
+			}
+		}
+		else if(currentNode->state == VISITED_BOTH_NODE)
+		{
+			currentNode = stackPop(stack);
+			printf("Popped stack\n");
 		}
 	}
-	
 	stackDel(stack);
 	printf("deleted a stack\n");
 	
